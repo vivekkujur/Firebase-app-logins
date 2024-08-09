@@ -17,8 +17,7 @@ import com.example.firebaseloginapp_02.module.onboard.OnBoardViewModel
 class OnboardFragment : Fragment() {
 
     lateinit var  onboardViewModel : OnBoardViewModel
-    var  _binding: FragmentOnboardBinding? = null
-    val binding get() = _binding
+    var  binding: FragmentOnboardBinding? = null
 
 
     override fun onCreateView(
@@ -26,7 +25,7 @@ class OnboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentOnboardBinding.inflate(inflater,container,false)
+        binding = FragmentOnboardBinding.inflate(inflater,container,false)
 
         onboardViewModel = ViewModelProvider(this).get(OnBoardViewModel::class.java)
 

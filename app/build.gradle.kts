@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("kapt")
+
+
 }
 
 android {
@@ -59,4 +62,6 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.11.0")
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
 }
