@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/onboardFragment"
-        android:name="com.example.firebaseloginapp_02.OnboardFragment"
+        android:name="com.example.firebaseloginapp_02.module.onboard.OnboardFragment"
         android:label="fragment_onboard"
         tools:layout="@layout/fragment_onboard" >
         <action
@@ -22,12 +22,12 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.firebaseloginapp_02.HomeFragment"
+        android:name="com.example.firebaseloginapp_02.module.onboard.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.firebaseloginapp_02.LoginFragment"
+        android:name="com.example.firebaseloginapp_02.module.onboard.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.firebaseloginapp_02.RegisterFragment"
+        android:name="com.example.firebaseloginapp_02.module.onboard.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action

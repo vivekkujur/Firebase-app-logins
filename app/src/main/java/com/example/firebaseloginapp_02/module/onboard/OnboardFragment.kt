@@ -1,4 +1,4 @@
-package com.example.firebaseloginapp_02
+package com.example.firebaseloginapp_02.module.onboard
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.firebaseloginapp_02.R
 import com.example.firebaseloginapp_02.databinding.FragmentOnboardBinding
-import com.example.firebaseloginapp_02.module.onboard.OnBoardViewModel
 
 
 class OnboardFragment : Fragment() {
@@ -34,6 +35,7 @@ class OnboardFragment : Fragment() {
 
             onClickLoginLive.observe(requireActivity() , Observer {
                 Toast.makeText(requireActivity(),"button clicked ",Toast.LENGTH_LONG).show();
+                findNavController().navigate(R.id.loginFragment)
             })
 
         }
