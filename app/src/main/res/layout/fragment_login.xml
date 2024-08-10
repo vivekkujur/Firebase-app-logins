@@ -98,7 +98,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:letterSpacing="0.1"
-            android:text="Forget pssword ?"
+            android:text="Forgot pssword ?"
             android:textAlignment="center"
             android:onClick="@{()->model.onClickForgetPassBtn()}"
 
