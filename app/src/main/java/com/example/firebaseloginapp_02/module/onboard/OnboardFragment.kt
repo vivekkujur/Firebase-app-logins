@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.firebaseloginapp_02.R
 import com.example.firebaseloginapp_02.databinding.FragmentOnboardBinding
+import com.example.firebaseloginapp_02.module.onboard.viewModels.OnBoardViewModel
 
 
 class OnboardFragment : Fragment() {

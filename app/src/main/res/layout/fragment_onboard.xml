@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.example.firebaseloginapp_02.module.onboard.OnBoardViewModel" />
+            type="com.example.firebaseloginapp_02.module.onboard.viewModels.OnBoardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

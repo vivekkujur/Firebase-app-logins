@@ -2,7 +2,7 @@ package com.example.firebaseloginapp_02.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.firebaseloginapp_02.module.onboard.OnBoardViewModel
+import com.example.firebaseloginapp_02.module.onboard.viewModels.OnBoardViewModel
 
 class MainViewModelFactory:ViewModelProvider.Factory {
 
