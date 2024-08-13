@@ -16,6 +16,10 @@ import com.example.firebaseloginapp_02.databinding.FragmentLoginBinding
 import com.example.firebaseloginapp_02.databinding.FragmentOnboardBinding
 import com.example.firebaseloginapp_02.module.onboard.viewModels.LoginViewModel
 import com.example.firebaseloginapp_02.module.onboard.viewModels.OnBoardViewModel
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -74,9 +78,9 @@ class LoginFragment : Fragment() {
                 Toast.makeText(requireActivity(),"Apple", Toast.LENGTH_SHORT).show();
             })
             clickFaceBookLive.observe(requireActivity() , Observer {
+                binding?.imgFacebookBtn?.performClick()
                 Toast.makeText(requireActivity(),"Facebook", Toast.LENGTH_SHORT).show();
             })
-
         }
 
 
@@ -88,6 +92,26 @@ class LoginFragment : Fragment() {
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         firebaseAuth = FirebaseAuth.getInstance()
 
+         var  callbackManager = CallbackManager.Factory.create()
+        var buttonFacebookLogin = binding?.imgFacebookBtn
+        buttonFacebookLogin?.setReadPermissions("openid","email", "public_profile")
+        buttonFacebookLogin?.registerCallback(callbackManager, object :
+            FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                Log.d("GooglezLogin", "facebook:onSuccess:${loginResult.accessToken.token}")
+//                handleFacebookAccessToken()
+            }
+
+            override fun onCancel() {
+                Log.d("GooglezLogin", "facebook:onCancel")
+                // ...
+            }
+
+            override fun onError(error: FacebookException) {
+                Log.d("GooglezLogin", "facebook:onError", error)
+                // ...
+            }
+        })
 
         return binding?.root
     }

@@ -5,4 +5,7 @@
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="facebook_app_id">896821178923604</string>
+    <string name="fb_login_protocol_scheme">fb896821178923604</string>
+    <string name="facebook_client_token">56789</string>
 </resources>
