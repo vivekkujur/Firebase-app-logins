@@ -19,6 +19,7 @@ class LoginViewModel :ViewModel() {
 
     fun onClickLoginBtn(){
         clickLoginLive.value = Unit
+
     }
 
     fun onClickForgetPassBtn(){

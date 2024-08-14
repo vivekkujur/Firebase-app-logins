@@ -3,36 +3,30 @@ package com.example.firebaseloginapp_02.module.onboard
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.firebaseloginapp_02.R
 import com.example.firebaseloginapp_02.databinding.FragmentLoginBinding
-import com.example.firebaseloginapp_02.databinding.FragmentOnboardBinding
+import com.example.firebaseloginapp_02.module.HomeActivity
 import com.example.firebaseloginapp_02.module.onboard.viewModels.LoginViewModel
-import com.example.firebaseloginapp_02.module.onboard.viewModels.OnBoardViewModel
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
 
@@ -42,7 +36,8 @@ class LoginFragment : Fragment() {
     lateinit var mGoogleSignInClient: GoogleSignInClient
     val Req_Code: Int = 123
     private lateinit var firebaseAuth: FirebaseAuth
-    // ...
+
+
 // Initialize Firebase Auth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,11 +52,15 @@ class LoginFragment : Fragment() {
         with(loginViewModel){
 
             binding?.model = this
-            binding?.lifecycleOwner =  requireActivity()
+            binding?.lifecycleOwner =  this@LoginFragment
 
-            clickLoginLive.observe(requireActivity() , Observer {
-                Toast.makeText(requireActivity(),"Login", Toast.LENGTH_SHORT).show();
-                findNavController().navigate(R.id.homeFragment)
+            clickLoginLive.observe(viewLifecycleOwner , Observer {
+
+                //try to  clear view model data
+                it?.let{
+                    Toast.makeText(requireActivity(),"Login", Toast.LENGTH_SHORT).show();
+                  goToHomePage()
+                }
             })
 
             clickForgetPassLive.observe(requireActivity() , Observer {
@@ -100,6 +99,16 @@ class LoginFragment : Fragment() {
             override fun onSuccess(loginResult: LoginResult) {
                 Log.d("GooglezLogin", "facebook:onSuccess:${loginResult.accessToken.token}")
 //                handleFacebookAccessToken()
+
+                var pref =  requireActivity().getSharedPreferences("pref",0)
+                var editor= pref.edit()
+                editor.putString("token", loginResult.accessToken.token.toString())
+                editor.putString("email", "")
+                editor.putString("name", "")
+                pref.edit().apply()
+
+                goToHomePage()
+
             }
 
             override fun onCancel() {
@@ -116,13 +125,18 @@ class LoginFragment : Fragment() {
         return binding?.root
     }
 
+    override fun onStop() {
+        super.onStop()
+
+
+    }
+
 
     private fun signInGoogle() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, Req_Code)
     }
 
-    // onActivityResult() function : this is where
     // we provide the task and data for the Google Account
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -150,16 +164,38 @@ class LoginFragment : Fragment() {
 
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-//                SavedPreference.setEmail(this, account.email.toString())
-//                SavedPreference.setUsername(this, account.displayName.toString())
+
+               var pref =  requireActivity().getSharedPreferences("pref",0)
+                var editor= pref.edit()
+                editor.putString("token", account.idToken)
+                editor.putString("email", account.email.toString())
+                editor.putString("name", account.displayName.toString())
+                pref.edit().apply()
+
+                goToHomePage()
+
                  Log.d("GooglezLogin", "displayName: ${account.email.toString()} - ${account.displayName.toString()} - ${account.idToken}")
             }
         }
     }
 
+    fun goToHomePage (){
+
+        val myIntent: Intent = Intent(
+            requireActivity(),
+            HomeActivity::class.java
+        )
+        requireActivity().startActivity(myIntent)
+    }
+
     override fun onStart() {
         super.onStart()
 
+        var pref =  requireActivity().getSharedPreferences("pref",0)
+        var token= pref.getString("token",null)
+        if(token!=null){
+            goToHomePage()
+        }
     }
 
 
